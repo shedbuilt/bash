@@ -1,7 +1,6 @@
 #!/bin/bash
-patch -Np1 -i "$SHED_PATCHDIR/bash-4.4-upstream_fixes-1.patch"
 ./configure --prefix=/usr \
-            --docdir=/usr/share/doc/bash-4.4 \
+            --docdir=/usr/share/doc/bash-4.4.12 \
             --without-bash-malloc \
             --with-installed-readline
 make -j $SHED_NUMJOBS
