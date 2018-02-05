@@ -1,5 +1,5 @@
 NAME=bash
-VERSION=4.4.12
-REVISION=4
-SRC=http://ftp.gnu.org/gnu/bash/bash-4.4.12.tar.gz
-SRCMD5=7c112970cbdcadfc331e10eeb5f6aa41
+VERSION=4.4.18
+REVISION=5
+SRC=http://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz
+SRCMD5=518e2c187cc11a17040f0915dddce54e
