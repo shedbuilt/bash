@@ -1,5 +1,5 @@
 #!/bin/bash
-case "$SHED_BUILDMODE" in
+case "$SHED_BUILD_MODE" in
     toolchain)
         ./configure --prefix=/tools \
                     --without-bash-malloc || exit 1
@@ -11,16 +11,16 @@ case "$SHED_BUILDMODE" in
                     --with-installed-readline || exit 1
         ;;
 esac
-make -j $SHED_NUMJOBS && \
-make DESTDIR="$SHED_FAKEROOT" install || exit 1
+make -j $SHED_NUM_JOBS && \
+make DESTDIR="$SHED_FAKE_ROOT" install || exit 1
 
-case "$SHED_BUILDMODE" in
+case "$SHED_BUILD_MODE" in
     toolchain)
-        ln -sv bash "${SHED_FAKEROOT}/tools/bin/sh"
+        ln -sv bash "${SHED_FAKE_ROOT}/tools/bin/sh"
         ;;
     *)    
-        mkdir -v "${SHED_FAKEROOT}/bin"
-        mv -vf "${SHED_FAKEROOT}/usr/bin/bash" "${SHED_FAKEROOT}/bin"
-        ln -sv bash "${SHED_FAKEROOT}/bin/sh"
+        mkdir -v "${SHED_FAKE_ROOT}/bin"
+        mv -vf "${SHED_FAKE_ROOT}/usr/bin/bash" "${SHED_FAKE_ROOT}/bin"
+        ln -sv bash "${SHED_FAKE_ROOT}/bin/sh"
         ;;
 esac
