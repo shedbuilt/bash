@@ -1,0 +1,65 @@
+# Begin /etc/bashrc
+
+# From Gentoo
+# Test for an interactive shell.  There is no need to set anything
+# past this point for scp and rcp, and it's important to refrain from
+# outputting anything in those cases.
+if [[ $- != *i* ]] ; then
+    # Shell is non-interactive.  Be done now!
+    return
+fi
+
+# From Gentoo
+# Bash won't get SIGWINCH if another process is in the foreground.
+# Enable checkwinsize so that bash will check the terminal size when
+# it regains control.  #65623
+# http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
+shopt -s checkwinsize
+
+# From Gentoo
+# Disable completion when the input buffer is empty.  i.e. Hitting tab
+# and waiting a long time for bash to expand all of $PATH.
+shopt -s no_empty_cmd_completion
+
+# From Gentoo
+# Enable history appending instead of overwriting when exiting.  #139609
+shopt -s histappend
+
+# Colorize
+use_color=false
+if type -P dircolors >/dev/null ; then
+    LS_COLORS=
+    if [[ -f ~/.dircolors ]] ; then
+        eval "$(dircolors -b ~/.dircolors)"
+    elif [[ -f /etc/dircolors ]] ; then
+        eval "$(dircolors -b /etc/dircolors)"
+    else
+        eval "$(dircolors -b)"
+    fi
+
+    if [[ -n ${LS_COLORS:+set} ]] ; then
+        use_color=true
+    else
+        # Delete it if it's empty as it's useless in that case.
+        unset LS_COLORS
+    fi
+fi
+
+if ${use_color} ; then
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias fgrep='fgrep --color=auto'
+
+    # Set Colorized Prompt with working dir
+    if [[ ${EUID} == 0 ]] ; then
+        PS1='\[\033[01;31m\]'
+    else
+        PS1='\[\033[01;32m\]'
+    fi
+    PS1+='\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+else
+    PS1='\u@\h \w \$ '
+fi
+
+# End /etc/bashrc
