@@ -53,5 +53,5 @@ fi
 
 # Prune Documentation
 if [ -z "${SHED_PKG_LOCAL_OPTIONS[docs]}" ]; then
-    rm -rf "${SHED_FAKE_ROOT}${SHED_PKG_LOCAL_DOCDIR}"
+    rm -rf "${SHED_FAKE_ROOT}${SHED_PKG_LOCAL_PREFIX}/share/doc/"
 fi
