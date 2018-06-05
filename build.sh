@@ -24,31 +24,19 @@ make DESTDIR="$SHED_FAKE_ROOT" install || exit 1
 # Rearrange
 if [ -n "${SHED_PKG_LOCAL_OPTIONS[toolchain]}" ]; then
     ln -sv bash "${SHED_FAKE_ROOT}/tools/bin/sh" || exit 1
-elif [ -n "${SHED_PKG_LOCAL_OPTIONS[bootstrap]}" ]; then
-    install -v -Dm644 "${SHED_PKG_CONTRIB_DIR}/shells" "${SHED_FAKE_ROOT}/etc/shells" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/bashrc" "${SHED_FAKE_ROOT}/etc" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/profile" "${SHED_FAKE_ROOT}/etc" &&
-    install -v -Dm644 "${SHED_PKG_CONTRIB_DIR}/skel/.bash_logout" "${SHED_FAKE_ROOT}/etc/skel/.bash_logout" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.bash_profile" "${SHED_FAKE_ROOT}/etc/skel" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.bashrc" "${SHED_FAKE_ROOT}/etc/skel" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.profile" "${SHED_FAKE_ROOT}/etc/skel" &&
-    install -v -dm755 "${SHED_FAKE_ROOT}/etc/profile.d" &&
-    install -v -m755 "${SHED_PKG_CONTRIB_DIR}"/profile.d/*.sh "${SHED_FAKE_ROOT}/etc/profile.d" || exit 1
-fi
-
-if [ -z "${SHED_PKG_LOCAL_OPTIONS[toolchain]}" ]; then
-    install -v -Dm644 "${SHED_PKG_CONTRIB_DIR}/shells" "${SHED_FAKE_ROOT}/usr/share/defaults/etc/shells" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/bashrc" "${SHED_FAKE_ROOT}/usr/share/defaults/etc" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/profile" "${SHED_FAKE_ROOT}/usr/share/defaults/etc" &&
-    install -v -Dm644 "${SHED_PKG_CONTRIB_DIR}/skel/.bash_logout" "${SHED_FAKE_ROOT}/usr/share/defaults/etc/skel/.bash_logout" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.bash_profile" "${SHED_FAKE_ROOT}/usr/share/defaults/etc/skel" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.bashrc" "${SHED_FAKE_ROOT}/usr/share/defaults/etc/skel" &&
-    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.profile" "${SHED_FAKE_ROOT}/usr/share/defaults/etc/skel" &&
-    install -v -dm755 "${SHED_FAKE_ROOT}/usr/share/defaults/etc/profile.d" &&
-    install -v -m755 "${SHED_PKG_CONTRIB_DIR}"/profile.d/*.sh "${SHED_FAKE_ROOT}/usr/share/defaults/etc/profile.d" &&
+else
+    install -v -Dm644 "${SHED_PKG_CONTRIB_DIR}/shells" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc/shells" &&
+    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/bashrc" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc" &&
+    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/profile" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc" &&
+    install -v -Dm644 "${SHED_PKG_CONTRIB_DIR}/skel/.bash_logout" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc/skel/.bash_logout" &&
+    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.bash_profile" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc/skel" &&
+    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.bashrc" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc/skel" &&
+    install -v -m644 "${SHED_PKG_CONTRIB_DIR}/skel/.profile" "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc/skel" &&
+    install -v -dm755 "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc/profile.d" &&
+    install -v -m755 "${SHED_PKG_CONTRIB_DIR}"/profile.d/*.sh "${SHED_FAKE_ROOT}${SHED_PKG_DEFAULTS_INSTALL_DIR}/etc/profile.d" &&
     mkdir -v "${SHED_FAKE_ROOT}/bin" &&
     mv -vf "${SHED_FAKE_ROOT}/usr/bin/bash" "${SHED_FAKE_ROOT}/bin" &&
-    ln -sv bash "${SHED_FAKE_ROOT}/bin/sh"
+    ln -sv bash "${SHED_FAKE_ROOT}/bin/sh" || exit 1
 fi
 
 # Prune Documentation
